@@ -7,7 +7,7 @@ def check_bd():
     cur.execute("""
         CREATE TABLE IF NOT EXISTS users(
         id INT PRIMARY KEY,
-        username VARCHAR(255) NOT NULL,
+        username VARCHAR(255) NOT NULL UNIQUE,
         password VARCHAR(255) NOT NULL,
         name VARCHAR(255),
         );
@@ -26,7 +26,7 @@ def check_bd():
 
     con.commit()
 
-def add_user(username, password, name):
+def add_user(username, password, name=):
     cur.execute("""
         INSERT INTO users (username, password, name)
         VALUES (?, ?, ?)""",(username, password, name))
@@ -47,11 +47,19 @@ def login(username, password) -> bool:
     print(f'Добро пожаловать {result[2]}')
     return True
 
-def add_task(user_id, title, desriptions, date):
+def add_task(user_id, title, desriptions=None, date=None):
     cur.execute("""
         INSERT INTO tasks (user_id, title, desriptions, deadline_date)
         VALUES (?, ?, ?)""",(user_id, title, desriptions, date))
     con.commit()
+
+
+def deletet_task(task_id):
+    cur.execute("""
+         DELETE FROM tasks
+         WHERE id = (?)""",(task_id,))
+    con.commit()
+
 
 check_bd()
 #add_user('user','123456', 'Лев')
