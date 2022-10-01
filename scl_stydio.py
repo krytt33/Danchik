@@ -20,8 +20,14 @@ def check_bd():
     title VARCHAR(255) NOT NULL,
     discriptions VARCHAR(255),
     deadleline_date DATETIME,
-    FORGEIGN KEY (user id) REFERENCES user(id)
+    FORGEIGN KEY (user_id) REFERENCES user(id)
     );
     """)
 
-    con
+    con.commit()
+
+def add_user(username, password, name):
+    cur.execute("""
+    INSERT INTO users (username, password, name)
+    VALUES (?, ?, ?)""",(username, password, name))
+    con.commit()
