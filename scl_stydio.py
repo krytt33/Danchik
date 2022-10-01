@@ -47,6 +47,13 @@ def login(username, password) -> bool:
     print(f'Добро пожаловать {result[2]}')
     return True
 
+def add_task(user_id, title, desriptions, date):
+    cur.execute("""
+        INSERT INTO tasks (user_id, title, desriptions, deadline_date)
+        VALUES (?, ?, ?)""",(user_id, title, desriptions, date))
+    con.commit()
+
 check_bd()
-add_user('user','123456', 'Лев')
-login()
+#add_user('user','123456', 'Лев')
+#login('user', '123456')
+add_task(1,'Помыть полы', 'Помыть полы ны кухн и в ванной', datetime.now())
