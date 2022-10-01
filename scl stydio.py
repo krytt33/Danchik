@@ -1,7 +1,27 @@
-#Проект посвещён Николаю
+import _sqlite3
 
-#Добавить графический интерфейс
-a = int (input("введите a="))
-b = int (input("введите b"))
-с = a+b
-print ('вывести сумму a+b = ' ,с)
+con = _sqlite3.connect('to_do_list._sqlite')
+cur = con.cursor()
+
+def check_bd():
+    cur.execute("""
+    CREATE TABLE IF NOT EXISTS users(
+    id INT PRIMARY KEY,
+    username VARCHAR(255) NOT NULL,
+    password VARCHAR(255) NOT NULL,
+    name VARCHAR(255),
+    );
+    """)
+
+    cur.execute("""
+    CREATE TABLE IF NOT EXISTS takes(
+    id INT PRIMARY KEY,
+    user INT,
+    title VARCHAR(255) NOT NULL,
+    discriptions VARCHAR(255),
+    deadleline_date DATETIME,
+    FORGEIGN KEY (user id) REFERENCES user(id)
+    );
+    """)
+
+    con
